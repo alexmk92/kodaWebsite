@@ -7,15 +7,13 @@ php_value max_execution_time 999999999
 php_value max_input_time 999999999
 
 
-#Force www:
-RewriteEngine on
-RewriteCond %{HTTP_HOST} ^yoursite.com [NC]
-RewriteRule ^(.*)$ http://www.yoursite.com/$1 [L,R=301,NC]
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (.*)$ index.php?page=$1 [QSA,NC,L]
 
-RewriteCond %{HTTP_HOST} ^admin.yoursite.com [NC]
-RewriteRule ^(.*)$ http://www.yoursite.com/admin [L,R=301,NC]
-
-#--- Rewrite PHP files clean URL
+#--- Rewrite PHP files clean URL for documentation
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^([A-Za-z0-9-]+)$ ?page=$1 [NC,L]
-RewriteRule ^([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ ?page=$1&id=$2 [NC,L]
+RewriteRule projects/^([A-Za-z0-9-]+)$ ?page=$1 [NC,L]
+</IfModule>

@@ -1,7 +1,7 @@
 <?php
 namespace app;
 
-require './app/core/conf/init.php';
+require './app/config/init.php';
 require './app/core/models/Database.php';
 
 /*
@@ -60,19 +60,21 @@ defined('LIB_DIR') or define('LIB_DIR', BASE_PATH."/public/lib/");
 |
 */
 
-require_once(VIEW_PATH . "components/header.php");
 
-if(isset($_GET['page'])) {
-    $view = $_GET['page'];
-    if(file_exists(VIEW_PATH.$view.".php")) {
-        require_once(VIEW_PATH.$view.".php");
+if(!empty($_GET['page'])) {
+    $view = ucfirst($_GET['page']);
+    require_once(VIEW_PATH . "components/header.php");
+    if(file_exists(VIEW_PATH.strtolower($view).".php")) {
+        require_once(VIEW_PATH.strtolower($view).".php");
     } else {
         header("Status: 404 Not Found");
         header('HTTP/1.0 404 Not Found');
         require_once(CORE_PATH . "http_responses/404.php");
     }
 } else {
+    $view = "Home";
     // This should only happen when a bogus URL is requested
+    require_once(VIEW_PATH . "components/header.php");
     require_once(VIEW_PATH."home.php");
 }
 require_once(VIEW_PATH . "components/footer.php");

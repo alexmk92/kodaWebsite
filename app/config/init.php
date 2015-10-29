@@ -1,4 +1,3 @@
-
 <?php
 
 require 'conf.php';
@@ -15,8 +14,8 @@ require 'conf.php';
 |
 */
 
-$appConf = include "./app/core/conf/app.php";
-$dbConf  = include "./app/core/conf/database.php";
+$appConf = include "app.php";
+$dbConf  = include "database.php";
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +30,8 @@ $dbConf  = include "./app/core/conf/database.php";
 if ($appConf['debug'] == true)
 {
     ini_set('display_errors',1);
+    ini_set('xdebug.var_display_max_depth', 200);
+    ini_set('xdebug.var_display_max_children', 99999);
+    ini_set('xdebug.var_display_max_data', 999999);
     error_reporting(E_ALL);
 }
